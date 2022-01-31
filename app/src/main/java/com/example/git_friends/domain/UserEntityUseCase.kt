@@ -5,5 +5,6 @@ interface UserEntityUseCase {
     fun readUser(userEntity: UserEntity)
     fun updateUser()
     fun deleteUser(userEntity: UserEntity)
+    fun getListUsers(): List<UserEntity>
 
 }

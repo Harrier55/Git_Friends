@@ -4,19 +4,29 @@ import com.example.git_friends.domain.UserEntity
 import com.example.git_friends.domain.UserEntityUseCase
 
 class UserEntityRepo: UserEntityUseCase {
+
+    private val listUsers:ArrayList<UserEntity> = ArrayList()
+
+    override fun getListUsers(): List<UserEntity> {
+        return ArrayList<UserEntity>(listUsers)
+    }
+
+    // CRUD
     override fun createUser(userEntity: UserEntity) {
-        TODO("Not yet implemented")
+        listUsers.add(userEntity)
     }
 
     override fun readUser(userEntity: UserEntity) {
-        TODO("Not yet implemented")
+       //todo
     }
 
     override fun updateUser() {
-        TODO("Not yet implemented")
+       //todo
     }
 
     override fun deleteUser(userEntity: UserEntity) {
-        TODO("Not yet implemented")
+        // todo
     }
+
+
 }
