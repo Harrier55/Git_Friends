@@ -1,7 +1,9 @@
 package com.example.git_friends.ui.listuserfragment
 
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.git_friends.R
 import com.example.git_friends.data.App
 import com.example.git_friends.domain.UserEntity
 
@@ -16,4 +18,8 @@ class ListUserFragmentViewModel: ViewModel() {
     fun getDataFromViewModel(){
         listUserViewModel.postValue(listUser)
     }
+
+
+
+
 }

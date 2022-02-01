@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.git_friends.R
 import com.example.git_friends.domain.UserEntity
 
-class ListUserAdapterRecyclerView: RecyclerView.Adapter<ListUserAdapterRecyclerView.ListUserViewHolder>() {
+class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnClickItemListUsersFragment): RecyclerView.Adapter<ListUserAdapterRecyclerView.ListUserViewHolder>() {
 
     private var listUsers:List<UserEntity> = mutableListOf()
 
@@ -38,8 +38,8 @@ class ListUserAdapterRecyclerView: RecyclerView.Adapter<ListUserAdapterRecyclerV
             .into(holder.avatar)
 
         holder.login.setOnClickListener {
-            Toast.makeText(holder.itemView.context,listUsers[position].login,Toast.LENGTH_SHORT).show()
-
+//            Toast.makeText(holder.itemView.context,listUsers[position].login,Toast.LENGTH_SHORT).show()
+            onClickItemListUsersFragment.onClickItemUser(listUsers[position])
         }
     }
 
