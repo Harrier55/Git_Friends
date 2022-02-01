@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.git_friends.R
 import com.example.git_friends.domain.UserEntity
 
@@ -30,7 +32,15 @@ class ListUserAdapterRecyclerView: RecyclerView.Adapter<ListUserAdapterRecyclerV
 
     override fun onBindViewHolder(holder: ListUserViewHolder, position: Int) {
         holder.login.text = listUsers[position].login
-        // todo add holder.avatar
+        Glide.with(holder.itemView.context)
+            .load(listUsers[position].avatar)
+            .placeholder(R.drawable.ic_baseline_attribution_24)
+            .into(holder.avatar)
+
+        holder.login.setOnClickListener {
+            Toast.makeText(holder.itemView.context,listUsers[position].login,Toast.LENGTH_SHORT).show()
+
+        }
     }
 
 
