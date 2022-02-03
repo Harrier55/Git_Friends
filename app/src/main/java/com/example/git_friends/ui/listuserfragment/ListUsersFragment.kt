@@ -16,16 +16,16 @@ import com.example.git_friends.R
 import com.example.git_friends.databinding.FragmentListUsersBinding
 import com.example.git_friends.domain.UserEntity
 import com.example.git_friends.ui.MainActivity
+import com.example.git_friends.ui.ManageFragment
 import com.example.git_friends.ui.userprofilefragment.UserProfileFragment
 
 
-class ListUsersFragment : Fragment() {
+class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment() {
 
     private var _binding: FragmentListUsersBinding? = null
     private val binding get() = _binding!!
     private val listUserAdapter by lazy { ListUserAdapterRecyclerView(onClickItemListUsersFragment) }
     private val viewModel by lazy { ViewModelProvider(this)[ListUserFragmentViewModel::class.java] }
-    private val userProfileFragment: UserProfileFragment = UserProfileFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,28 +58,11 @@ class ListUsersFragment : Fragment() {
 
     private var onClickItemListUsersFragment = object : OnClickItemListUsersFragment {
         override fun onClickItemUser(userEntity: UserEntity) {
-            Toast.makeText(requireContext(), userEntity.login, Toast.LENGTH_SHORT).show()
+ //           Toast.makeText(requireContext(), userEntity.login, Toast.LENGTH_SHORT).show()
+            manageFragment.clickListUserFragment(userEntity)
 
-            val bundle = bundleOf(Pair("KEY",10000))
-            userProfileFragment.arguments = bundle
-
-
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container,userProfileFragment).commit()
-
-//            initFragmentManager()
-
+ //           val bundle = bundleOf(Pair("448",userEntity))
         }
-    }
-
-
-
-    private fun initFragmentManager() {
-        val fragmentManager: FragmentManager = parentFragmentManager
-
-        fragmentManager.beginTransaction()
-            .replace(R.id.fragment_container,userProfileFragment)
-            .addToBackStack("ListUserFragment")
-            .commit()
     }
 
     override fun onDestroy() {

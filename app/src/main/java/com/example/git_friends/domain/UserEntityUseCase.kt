@@ -4,6 +4,6 @@ interface UserEntityUseCase {
     fun createUser(userEntity: UserEntity)
     fun readUser(): List<UserEntity>
     fun updateUser()
-    fun deleteUser(userEntity: UserEntity)
+    fun deleteUser(userEntity: UserEntity): Boolean
 
 }

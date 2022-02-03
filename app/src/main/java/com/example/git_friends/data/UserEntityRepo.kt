@@ -20,12 +20,21 @@ class UserEntityRepo : UserEntityUseCase {
 
     }
 
-    override fun deleteUser(userEntity: UserEntity) {
+    override fun deleteUser(userEntity: UserEntity): Boolean {
         for (user in listUsers) {
             if (user.id == userEntity.id) {
                 listUsers.remove(user)
+                return true
             }
         }
+        return false
+//        for (int i = 0; i < cache.size(); i++) {
+//            if (cache.get(i).getId() == id) {
+//                cache.remove(i);
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
 
