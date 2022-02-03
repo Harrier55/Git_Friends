@@ -34,9 +34,6 @@ class MainActivity : AppCompatActivity() {
 
      private fun initFragmentManager(fragment: Fragment) {
         val fragmentManager: FragmentManager = supportFragmentManager
-//         val bundle = bundleOf(Pair("KEY",10000))
-//         fragment.arguments = bundle
-
         fragmentManager.beginTransaction()
             .replace(R.id.fragment_container,fragment)
             .addToBackStack("ListUserFragment")

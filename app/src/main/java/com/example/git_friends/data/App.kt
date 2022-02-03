@@ -2,6 +2,8 @@ package com.example.git_friends.data
 
 import android.app.Application
 import com.example.git_friends.domain.UserEntity
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class App: Application() {
 
@@ -31,5 +33,14 @@ class App: Application() {
         userEntityRepo.createUser(UserEntity(5,"niqmarin"))
         userEntityRepo.createUser(UserEntity(6,"niqmarin"))
         userEntityRepo.createUser(UserEntity(7,"test log 7"))
+    }
+
+    fun retrofitInstance(baseURl:String):Retrofit{
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseURl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        return retrofit
     }
 }

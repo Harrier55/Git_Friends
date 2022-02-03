@@ -12,10 +12,10 @@ class ListUserFragmentViewModel: ViewModel() {
 
     init {
         /** попробовал изменить значение поля прямо в классе*/
-        listUser = App.instance.getInstanceUserEntityRepo().readUser()
-        listUser.forEach {
-            if(it.id == 4L){it.login = "ytrytyrtyurtruyt"}
-        }
+//        listUser = App.instance.getInstanceUserEntityRepo().readUser()
+//        listUser.forEach {
+//            if(it.id == 4L){it.login = "ytrytyrtyurtruyt"}
+//        }
 
         listUser = App.instance.getInstanceUserEntityRepo().readUser()
     }
