@@ -2,10 +2,12 @@ package com.example.git_friends.data
 
 import com.example.git_friends.domain.UserEntity
 import com.example.git_friends.domain.UserEntityUseCase
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
-class UserEntityRepo : UserEntityUseCase {
+class UserEntityRepo() : UserEntityUseCase {
 
-    private val listUsers: ArrayList<UserEntity> = ArrayList()
+    private val listUsers: MutableList<UserEntity> = mutableListOf<UserEntity>() as ArrayList<UserEntity>
 
     // CRUD
     override fun createUser(userEntity: UserEntity) {
@@ -28,14 +30,18 @@ class UserEntityRepo : UserEntityUseCase {
             }
         }
         return false
-//        for (int i = 0; i < cache.size(); i++) {
-//            if (cache.get(i).getId() == id) {
-//                cache.remove(i);
-//                return true;
-//            }
-//        }
-//        return false;
     }
+
+    override val observableListUserEntity: Observable<List<UserEntity>>
+        get() {
+            return observableListUserEntity
+        }
+
+
+    override val singleListUser: Single<List<UserEntity>>
+        get() {
+            return singleListUser
+        }
 
 
 }

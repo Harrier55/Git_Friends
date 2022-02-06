@@ -1,6 +1,8 @@
 package com.example.git_friends.ui.userprofilefragment
 
+
 import UserReposGitHub
+import android.database.Observable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,16 +22,31 @@ import retrofit2.http.Multipart
 import retrofit2.http.Part
 import retrofit2.http.Path
 
+
+
+import android.util.Log
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.annotations.NonNull
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import io.reactivex.rxjava3.schedulers.Schedulers
+
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+
+import retrofit2.converter.gson.GsonConverterFactory
+
+import retrofit2.Retrofit
+
 interface RetrofitUserProfile {
 
     @GET("users/{user}/repos")
-    fun loadUsers(@Path("user") user:String): Call<List<UserReposGitHub>>
+    fun loadUsers(@Path("user") user:String): Single<List<UserReposGitHub>>
 }
 
-
-
-
 class UserProfileFragment : Fragment() {
+
+    private val TAG: String = "@@@"
 
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
@@ -63,30 +80,30 @@ class UserProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loginUserProfileTextView.text = recieveInfo
 
-        val retrofit = App.instance.retrofitInstance(baseURl)
-        val retoService = retrofit.create(RetrofitUserProfile::class.java)
-        val call = retoService.loadUsers(recieveInfo)
+        val retrofit = App.instance.retrofitInstanceRx(baseURl)
+        val serviceApi = retrofit.create(RetrofitUserProfile::class.java)
 
-        call.enqueue(object : Callback<List<UserReposGitHub>>{
-            override fun onResponse(
-                call: Call<List<UserReposGitHub>>,
-                response: Response<List<UserReposGitHub>>
-            ) {
-                binding.loginUserProfileTextView.text = response.body().toString()
+
+
+         serviceApi.loadUsers(recieveInfo)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess {
+                binding.loginUserProfileTextView.text = it.toString()
             }
 
-            override fun onFailure(call: Call<List<UserReposGitHub>>, t: Throwable) {
-              //  TODO("Not yet implemented")
+            .doOnError{
+                Log.d(TAG, "onError: $it")
             }
+            .subscribe()
 
-
-        })
 
     }
 
 
     override fun onDestroy() {
         _binding = null
+
         super.onDestroy()
     }
 
