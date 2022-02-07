@@ -18,13 +18,18 @@
     <TextView
         android:id="@+id/login_user_profile_text_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Login user"
         android:gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/black"/>
+
+    <ListView
+        android:id="@+id/login_user_profile_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

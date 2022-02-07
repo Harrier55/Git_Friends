@@ -4,10 +4,14 @@ import com.example.git_friends.domain.UserEntity
 import com.example.git_friends.domain.UserEntityUseCase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class UserEntityRepo() : UserEntityUseCase {
 
-    private val listUsers: MutableList<UserEntity> = mutableListOf<UserEntity>() as ArrayList<UserEntity>
+    private val listUsers: MutableList<UserEntity> =
+        mutableListOf<UserEntity>() as ArrayList<UserEntity>
+
+ //   private  var  behaviorSubject : BehaviorSubject<List<UserEntity>>? = null
 
     // CRUD
     override fun createUser(userEntity: UserEntity) {
@@ -19,7 +23,7 @@ class UserEntityRepo() : UserEntityUseCase {
     }
 
     override fun updateUser() {
-
+        // todo
     }
 
     override fun deleteUser(userEntity: UserEntity): Boolean {
@@ -33,15 +37,14 @@ class UserEntityRepo() : UserEntityUseCase {
     }
 
     override val observableListUserEntity: Observable<List<UserEntity>>
-        get() {
-            return observableListUserEntity
-        }
+        get() = Observable.empty()
 
 
     override val singleListUser: Single<List<UserEntity>>
         get() {
-            return singleListUser
+           return Single.just(listUsers)
         }
+
 
 
 }

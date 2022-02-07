@@ -23,7 +23,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 
-
 import android.util.Log
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -37,12 +36,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 import retrofit2.Retrofit
+import android.widget.ArrayAdapter
+import android.widget.ListAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 
-interface RetrofitUserProfile {
-
-    @GET("users/{user}/repos")
-    fun loadUsers(@Path("user") user:String): Single<List<UserReposGitHub>>
-}
 
 class UserProfileFragment : Fragment() {
 
@@ -52,8 +51,8 @@ class UserProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var recieveInfo: String
+    private val viewModel by lazy { ViewModelProvider(this)[UserProfileViewModel::class.java] }
 
-    private val baseURl: String = "https://api.github.com/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,17 +60,15 @@ class UserProfileFragment : Fragment() {
         val bundle = arguments
         if (bundle != null) {
             recieveInfo = bundle.getString("KEY").toString()
-
             Toast.makeText(requireContext(), recieveInfo, Toast.LENGTH_SHORT).show()
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_user_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_user_profile, container, false)
         _binding = FragmentUserProfileBinding.bind(view)
         return view
     }
@@ -80,30 +77,31 @@ class UserProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loginUserProfileTextView.text = recieveInfo
 
-        val retrofit = App.instance.retrofitInstanceRx(baseURl)
-        val serviceApi = retrofit.create(RetrofitUserProfile::class.java)
+        viewModel.getListUserRepoGitHub(recieveInfo).observe(viewLifecycleOwner, Observer {
+            val avatarUrl = it[0].owner.avatar_url
 
+            Glide.with(requireContext())
+                .load(avatarUrl)
+                .placeholder(R.drawable.ic_baseline_attribution_24)
+                .into(binding.avatarUserProfileImageView)
 
+            val users = arrayListOf<String>()
 
-         serviceApi.loadUsers(recieveInfo)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess {
-                binding.loginUserProfileTextView.text = it.toString()
+            it.forEach {
+                users.add(it.name)
             }
 
-            .doOnError{
-                Log.d(TAG, "onError: $it")
-            }
-            .subscribe()
-
+            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1, users
+            )
+            binding.loginUserProfileListView.adapter = arrayAdapter
+        })
 
     }
 
-
     override fun onDestroy() {
         _binding = null
-
         super.onDestroy()
     }
 
