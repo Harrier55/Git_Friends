@@ -1,8 +1,7 @@
 package com.example.git_friends.ui.userprofilefragment
 
 
-import UserReposGitHub
-import android.database.Observable
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,38 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.git_friends.R
-import com.example.git_friends.data.App
-import com.example.git_friends.databinding.FragmentListUsersBinding
 import com.example.git_friends.databinding.FragmentUserProfileBinding
-import com.example.git_friends.domain.UserEntity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.Part
-import retrofit2.http.Path
-
-
-import android.util.Log
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.observers.DisposableSingleObserver
-import io.reactivex.rxjava3.schedulers.Schedulers
-
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-
-import retrofit2.converter.gson.GsonConverterFactory
-
-import retrofit2.Retrofit
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-
 
 class UserProfileFragment : Fragment() {
 
