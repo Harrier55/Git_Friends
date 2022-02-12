@@ -1,9 +1,9 @@
 package com.example.git_friends.data
 
 import android.app.Application
+import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.domain.UserEntity
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -23,7 +23,7 @@ class App: Application() {
             private set
     }
 
-    fun getInstanceUserEntityRepo(): UserEntityRepo{
+    fun getInstanceUserEntityRepo(): UserEntityRepo {
         return userEntityRepo
     }
 

@@ -1,4 +1,4 @@
-package com.example.git_friends.data
+package com.example.git_friends.data.userentityrepo
 
 import com.example.git_friends.domain.UserEntity
 import com.example.git_friends.domain.UserEntityUseCase

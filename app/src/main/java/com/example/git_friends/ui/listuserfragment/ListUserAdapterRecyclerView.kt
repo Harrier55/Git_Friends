@@ -43,10 +43,6 @@ class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnCl
         }
     }
 
-
-
-
-
     class ListUserViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         val login: TextView = itemView.findViewById(R.id.item_list_user_login_text_view)
         val avatar: ImageView = itemView.findViewById(R.id.item_list_user_avatar_image_view)
