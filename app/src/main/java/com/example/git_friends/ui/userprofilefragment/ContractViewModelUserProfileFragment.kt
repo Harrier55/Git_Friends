@@ -7,5 +7,5 @@ interface ContractViewModelUserProfileFragment {
 
     fun getListUserRepoGitHub(loginUser:String): LiveData<List<UserReposGitHub>>
     fun getAvatar():LiveData<String>
-
+    fun addUser(loginUser:String)
 }

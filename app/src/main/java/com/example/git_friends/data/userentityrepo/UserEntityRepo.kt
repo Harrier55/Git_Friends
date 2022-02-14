@@ -18,7 +18,7 @@ class UserEntityRepo() : UserEntityUseCase {
         listUsers.add(userEntity)
     }
 
-    override fun readUser(): List<UserEntity> {
+    override fun readUsersList(): List<UserEntity> {
         return ArrayList<UserEntity>(listUsers)
     }
 

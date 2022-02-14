@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface UserEntityUseCase {
     fun createUser(userEntity: UserEntity)
-    fun readUser(): List<UserEntity>
+    fun readUsersList(): List<UserEntity>
     fun updateUser()
     fun deleteUser(userEntity: UserEntity): Boolean
 

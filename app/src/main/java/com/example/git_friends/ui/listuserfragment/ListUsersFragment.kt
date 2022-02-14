@@ -47,10 +47,6 @@ class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment()
 
     }
 
-//    private fun searchUser(){
-//        val searchLoginUser = binding.listUsersSearchUsersEditText.text.toString()
-//        Toast.makeText(requireContext(),searchLoginUser,Toast.LENGTH_SHORT).show()
-//    }
 
     private fun initRecycler(view: View) {
         binding.listUsersRecyclerView.layoutManager =
