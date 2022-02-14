@@ -11,8 +11,6 @@ class App: Application() {
 
     private val userEntityRepo by lazy { UserEntityRepo() }
 
-
-
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -22,9 +20,26 @@ class App: Application() {
         lateinit var instance: App
             private set
     }
-
+    /** получаем экземпляр репозитория*/
     fun getInstanceUserEntityRepo(): UserEntityRepo {
         return userEntityRepo
+    }
+
+
+    /** Используем Retrofit с обычным вызовом Call  */
+    fun retrofitInstance(baseURl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseURl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+    /**  Используем Retrofit с вызовом Rx  */
+    fun retrofitInstanceRx(baseURl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseURl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
     }
 
     fun generateTestListUser(){
@@ -35,21 +50,6 @@ class App: Application() {
         userEntityRepo.createUser(UserEntity(5,"niqmarin"))
         userEntityRepo.createUser(UserEntity(6,"niqmarin"))
         userEntityRepo.createUser(UserEntity(7,"test log 7"))
-    }
-    /** Используем с обычным вызовом Call  */
-    fun retrofitInstance(baseURl: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(baseURl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    /**  Используем с вызовом Rx  */
-    fun retrofitInstanceRx(baseURl: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(baseURl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
     }
 
 

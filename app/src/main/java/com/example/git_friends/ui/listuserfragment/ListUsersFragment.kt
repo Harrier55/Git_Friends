@@ -39,16 +39,15 @@ class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler(view)
+        initRecycler()
         binding.listUsersSearchButton.setOnClickListener {
             val searchLoginUser = binding.listUsersSearchUsersEditText.text.toString()
             manageFragment.sendUserProfileFragment(searchLoginUser)
         }
-
     }
 
 
-    private fun initRecycler(view: View) {
+    private fun initRecycler() {
         binding.listUsersRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.listUsersRecyclerView.adapter = listUserAdapter

@@ -70,7 +70,7 @@ class UserProfileFragment : Fragment() {
                 .placeholder(R.drawable.ic_baseline_attribution_24)
                 .into(binding.avatarUserProfileImageView)
         })
-
+        /** если пользователь есть в репозитории, то кнопка ДОБАВИТЬ не будет видна*/
         viewModel.checkUserInTheList(recieveInfoLoginUser).observe(viewLifecycleOwner, Observer {
             binding.addUserUserProfileButton.isVisible = it
         })
