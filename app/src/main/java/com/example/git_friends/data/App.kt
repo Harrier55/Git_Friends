@@ -36,14 +36,14 @@ class App: Application() {
         userEntityRepo.createUser(UserEntity(6,"niqmarin"))
         userEntityRepo.createUser(UserEntity(7,"test log 7"))
     }
-
+    /** Используем с обычным вызовом Call  */
     fun retrofitInstance(baseURl: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseURl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
+    /**  Используем с вызовом Rx  */
     fun retrofitInstanceRx(baseURl: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseURl)

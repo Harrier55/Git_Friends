@@ -2,16 +2,13 @@ package com.example.git_friends.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.git_friends.R
 import com.example.git_friends.data.App
 import com.example.git_friends.databinding.ActivityMainBinding
-import com.example.git_friends.domain.UserEntity
 import com.example.git_friends.ui.listuserfragment.ListUsersFragment
-import com.example.git_friends.ui.listuserfragment.OnClickItemListUsersFragment
 import com.example.git_friends.ui.userprofilefragment.UserProfileFragment
 
 class MainActivity : AppCompatActivity() {
@@ -41,10 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var manageFragment = object : ManageFragment{
-        override fun clickListUserFragment(userEntity: UserEntity) {
-
-            Toast.makeText(this@MainActivity, userEntity.login, Toast.LENGTH_SHORT).show()
-            val bundle = bundleOf(Pair("KEY",userEntity.login))
+        override fun sendUserProfileFragment(login: String?) {
+            val bundle = bundleOf(Pair("KEY",login))
             userProfileFragment.arguments = bundle
             initFragmentManager(userProfileFragment)
 

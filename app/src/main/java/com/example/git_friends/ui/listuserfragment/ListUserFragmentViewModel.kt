@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
-class ListUserFragmentViewModel : ViewModel() {
+class ListUserFragmentViewModel : ViewModel(),ContractViewModelListUserFragment {
     private var listUser: List<UserEntity> = mutableListOf()
     private val listUserViewModel = MutableLiveData<List<UserEntity>>()
 
@@ -22,8 +22,9 @@ class ListUserFragmentViewModel : ViewModel() {
         listUser = App.instance.getInstanceUserEntityRepo().readUser()
     }
 
-    fun loadDataFromViewModel() {
- //       listUserViewModel.postValue(listUser) // прямой синхронный метод
+    override fun loadData() {
+        /**  прямой синхронный метод*/
+ //       listUserViewModel.postValue(listUser)
 
         /** асинхронный метод через Rx */
         App.instance.getInstanceUserEntityRepo().singleListUser
@@ -31,7 +32,7 @@ class ListUserFragmentViewModel : ViewModel() {
             .subscribe()
     }
 
-    fun getListUsersFromViewModel():MutableLiveData<List<UserEntity>>{
+    override fun getListUsersFromViewModel():MutableLiveData<List<UserEntity>>{
         return listUserViewModel
     }
 
