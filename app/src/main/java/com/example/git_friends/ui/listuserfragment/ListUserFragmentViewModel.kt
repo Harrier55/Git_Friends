@@ -4,15 +4,19 @@ package com.example.git_friends.ui.listuserfragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.git_friends.data.App
+import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.domain.UserEntity
 
 class ListUserFragmentViewModel : ViewModel(),ContractViewModelListUserFragment {
     private var listUser: List<UserEntity> = mutableListOf()
     private val listUserViewModel = MutableLiveData<List<UserEntity>>()
 
+    private val userEntityRepo: UserEntityRepo by lazy { App.instance.di.getInstanceUserEntityRepo() }
+
+
 
     init {
-        listUser = App.instance.getInstanceUserEntityRepo().readUsersList()
+        listUser = userEntityRepo.readUsersList()
     }
 
     override fun loadData() {
@@ -20,7 +24,7 @@ class ListUserFragmentViewModel : ViewModel(),ContractViewModelListUserFragment 
  //       listUserViewModel.postValue(listUser)
 
         /** асинхронный метод через Rx */
-        App.instance.getInstanceUserEntityRepo().singleListUser
+        userEntityRepo.singleListUser
             .doOnSuccess {  listUserViewModel.postValue(it)}
             .subscribe()
     }

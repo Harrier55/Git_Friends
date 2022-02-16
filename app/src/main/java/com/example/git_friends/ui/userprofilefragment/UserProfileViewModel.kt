@@ -6,10 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.git_friends.data.App
+import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.data.webconnection.RetrofitUserProfile
 import com.example.git_friends.domain.UserEntity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-
+import retrofit2.Retrofit
 
 
 private const val BASEURl: String = "https://api.github.com/"
@@ -19,6 +20,9 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
     private val listUserProfileViewModel = MutableLiveData<List<UserReposGitHub>>()
     private val avatar = MutableLiveData<String>()
     private var checkUserInTheList = MutableLiveData<Boolean>()
+
+    private val userEntityRepo: UserEntityRepo by lazy { App.instance.di.getInstanceUserEntityRepo() }
+
 
     init {
         checkUserInTheList.postValue(true)
@@ -34,12 +38,12 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
     }
 
     override fun addUser(loginUser: String) {
-        App.instance.getInstanceUserEntityRepo().createUser(UserEntity(login = loginUser))
+        userEntityRepo.createUser(UserEntity(login = loginUser))
     }
 
     fun checkUserInTheList(loginUser: String):LiveData<Boolean>{
         Log.d("@@@", "checkUserInTheList: $loginUser")
-       val listUsers =  App.instance.getInstanceUserEntityRepo().readUsersList()
+       val listUsers =  userEntityRepo.readUsersList()
         listUsers.forEach { userEntity->
            if( userEntity.login?.lowercase() == loginUser.lowercase()){
                checkUserInTheList.postValue(false)  // пользователь есть в списке-кнопка невидима

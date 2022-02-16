@@ -71,8 +71,8 @@ class UserProfileFragment : Fragment() {
                 .into(binding.avatarUserProfileImageView)
         })
         /** если пользователь есть в репозитории, то кнопка ДОБАВИТЬ не будет видна*/
-        viewModel.checkUserInTheList(recieveInfoLoginUser).observe(viewLifecycleOwner, Observer {
-            binding.addUserUserProfileButton.isVisible = it
+        viewModel.checkUserInTheList(recieveInfoLoginUser).observe(viewLifecycleOwner, Observer {visiblity->
+            binding.addUserUserProfileButton.isVisible = visiblity
         })
 
         binding.addUserUserProfileButton.setOnClickListener {
