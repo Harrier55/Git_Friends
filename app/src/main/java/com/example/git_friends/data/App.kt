@@ -12,10 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class App: Application() {
 
-    val di: Di by lazy { Di() }
+//    val di: Di by lazy { Di() }
 
     override fun onCreate() {
         super.onCreate()
+        Di.init(this)
         instance = this
     }
 
@@ -39,14 +40,14 @@ class App: Application() {
 //            .addConverterFactory(GsonConverterFactory.create())
 //            .build()
 //    }
-    /**  Используем Retrofit с вызовом Rx  */
-    fun retrofitInstanceRx(baseURl: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(baseURl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
-    }
+//    /**  Используем Retrofit с вызовом Rx  */
+//    fun retrofitInstanceRx(baseURl: String): Retrofit {
+//        return Retrofit.Builder()
+//            .baseUrl(baseURl)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+//            .build()
+//    }
 
 
 

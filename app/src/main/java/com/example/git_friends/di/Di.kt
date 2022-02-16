@@ -1,45 +1,50 @@
 package com.example.git_friends.di
 
+import android.annotation.SuppressLint
+import android.content.Context
 import com.example.git_friends.data.userentityrepo.UserEntityRepo
-import com.example.git_friends.domain.UserEntity
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Di {
-    private val userEntityRepo by lazy { UserEntityRepo() }
+
+
+@SuppressLint("StaticFieldLeak")
+object Di {
+    const val BASEURL: String = "https://api.github.com/"
+
+    private lateinit var context: Context
+
+     fun init(context: Context){
+        this.context = context.applicationContext
+    }
+
 
     /** получаем экземпляр репозитория*/
-    fun getInstanceUserEntityRepo(): UserEntityRepo {
-        return userEntityRepo
-    }
+    val userEntityRepo by lazy { UserEntityRepo() } // теперь экземпляр репозитория мы можем получить так
 
 
-    /** Используем Retrofit с обычным вызовом Call  */
-    fun retrofitInstance(baseURl: String): Retrofit {
+    /** было так - получаем экземпляр репозитория*/
+//    fun getInstanceUserEntityRepo(): UserEntityRepo {
+//        return userEntityRepo
+//    }
+
+
+    /**  Используем Retrofit с вызовом Rx  и вызовем его как метод, для разнообразия*/
+    fun retrofitInstanceRx(baseUrl: String): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseURl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    /**  Используем Retrofit с вызовом Rx  */
-    fun retrofitInstanceRx(baseURl: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(baseURl)
+            .baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
+}
 
-    fun generateTestListUser(){
-        userEntityRepo.createUser(UserEntity(1,"kshalnov"))
-        userEntityRepo.createUser(UserEntity(2,"Harrier55"))
-        userEntityRepo.createUser(UserEntity(3,"kshalnov"))
-        userEntityRepo.createUser(UserEntity(4,"Rogoz208"))
-        userEntityRepo.createUser(UserEntity(5,"niqmarin"))
-        userEntityRepo.createUser(UserEntity(6,"niqmarin"))
-        userEntityRepo.createUser(UserEntity(7,"test log 7"))
+inline fun <reified T> inject(): T {
+    return when(T::class.java){
+        UserEntityRepo::class.java -> Di.userEntityRepo as T
+        Retrofit::class.java -> Di.retrofitInstanceRx(Di.BASEURL) as T
+
+        else -> throw IllegalArgumentException("Not class")
     }
-
-
 }

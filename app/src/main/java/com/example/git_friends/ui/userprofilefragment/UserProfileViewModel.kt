@@ -5,9 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.git_friends.data.App
 import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.data.webconnection.RetrofitUserProfile
+import com.example.git_friends.di.Di
+import com.example.git_friends.di.inject
 import com.example.git_friends.domain.UserEntity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import retrofit2.Retrofit
@@ -21,7 +22,8 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
     private val avatar = MutableLiveData<String>()
     private var checkUserInTheList = MutableLiveData<Boolean>()
 
-    private val userEntityRepo: UserEntityRepo by lazy { App.instance.di.getInstanceUserEntityRepo() }
+    private val userEntityRepo: UserEntityRepo = inject()
+    private val retrofit: Retrofit = inject()
 
 
     init {
@@ -42,7 +44,6 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
     }
 
     fun checkUserInTheList(loginUser: String):LiveData<Boolean>{
-        Log.d("@@@", "checkUserInTheList: $loginUser")
        val listUsers =  userEntityRepo.readUsersList()
         listUsers.forEach { userEntity->
            if( userEntity.login?.lowercase() == loginUser.lowercase()){
@@ -56,7 +57,7 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
 
 
     private fun webRequest(loginUser: String) {
-        val retrofit = App.instance.retrofitInstanceRx(BASEURl)
+//        val retrofit = App.instance.retrofitInstanceRx(BASEURl)
         val serviceApi = retrofit.create(RetrofitUserProfile::class.java)
 
         serviceApi.loadUsers(loginUser)
@@ -75,7 +76,6 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
             }
             .doOnError {
                 Log.d("@@@", "webRequest: $it")
-
             }
             .subscribe()
 
