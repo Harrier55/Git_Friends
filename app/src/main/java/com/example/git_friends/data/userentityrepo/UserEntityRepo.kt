@@ -18,7 +18,7 @@ class UserEntityRepo() : UserEntityUseCase {
         listUsers.add(userEntity)
     }
 
-    override fun readUser(): List<UserEntity> {
+    override fun readUsersList(): List<UserEntity> {
         return ArrayList<UserEntity>(listUsers)
     }
 
@@ -44,6 +44,16 @@ class UserEntityRepo() : UserEntityUseCase {
         get() {
            return Single.just(listUsers)
         }
+
+    fun generateTestListUser(){
+        createUser(UserEntity(1,"kshalnov"))
+        createUser(UserEntity(2,"Harrier55"))
+        createUser(UserEntity(3,"kshalnov"))
+        createUser(UserEntity(4,"Rogoz208"))
+        createUser(UserEntity(5,"niqmarin"))
+        createUser(UserEntity(6,"niqmarin"))
+        createUser(UserEntity(7,"test log 7"))
+    }
 
 
 

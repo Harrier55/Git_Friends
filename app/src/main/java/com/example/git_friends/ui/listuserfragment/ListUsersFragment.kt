@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +25,7 @@ class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.loadDataFromViewModel()
+        viewModel.loadData()
     }
 
     override fun onCreateView(
@@ -38,10 +39,15 @@ class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler(view)
+        initRecycler()
+        binding.listUsersSearchButton.setOnClickListener {
+            val searchLoginUser = binding.listUsersSearchUsersEditText.text.toString()
+            manageFragment.sendUserProfileFragment(searchLoginUser)
+        }
     }
 
-    private fun initRecycler(view: View) {
+
+    private fun initRecycler() {
         binding.listUsersRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.listUsersRecyclerView.adapter = listUserAdapter
@@ -51,9 +57,9 @@ class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment()
         })
     }
 
-    private var onClickItemListUsersFragment = object : OnClickItemListUsersFragment {
+    private var onClickItemListUsersFragment = object : OnClickItemListUsersFragmentRecyclerView {
         override fun onClickItemUser(userEntity: UserEntity) {
-            manageFragment.clickListUserFragment(userEntity)
+            manageFragment.sendUserProfileFragment(userEntity.login)
         }
     }
 

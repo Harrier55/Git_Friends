@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.git_friends.R
 import com.example.git_friends.domain.UserEntity
 
-class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnClickItemListUsersFragment): RecyclerView.Adapter<ListUserAdapterRecyclerView.ListUserViewHolder>() {
+class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnClickItemListUsersFragmentRecyclerView) :
+    RecyclerView.Adapter<ListUserAdapterRecyclerView.ListUserViewHolder>() {
 
-    private var listUsers:List<UserEntity> = mutableListOf()
+    private var listUsers: List<UserEntity> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun refreshListRecyclerView(inputUserList: List<UserEntity>){
+    fun refreshListRecyclerView(inputUserList: List<UserEntity>) {
         this.listUsers = inputUserList
         notifyDataSetChanged()
     }
@@ -26,7 +25,8 @@ class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnCl
     override fun getItemCount(): Int = listUsers.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListUserViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_list_user,parent,false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_list_user, parent, false)
         return ListUserViewHolder(itemView)
     }
 
@@ -43,7 +43,7 @@ class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnCl
         }
     }
 
-    class ListUserViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
+    class ListUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val login: TextView = itemView.findViewById(R.id.item_list_user_login_text_view)
         val avatar: ImageView = itemView.findViewById(R.id.item_list_user_avatar_image_view)
 
