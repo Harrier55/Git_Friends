@@ -14,6 +14,10 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.git_friends.data.App
+import com.example.git_friends.data.userentityrepo.UserEntityRepo
+import retrofit2.Retrofit
+import javax.inject.Inject
 
 class UserProfileFragment : Fragment() {
 
@@ -22,12 +26,23 @@ class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
+
+
+    @Inject
+    lateinit var userEntityRepo: UserEntityRepo
+
+//    @Inject
+//    lateinit var retrofit: Retrofit
+
     private lateinit var recieveInfoLoginUser: String
     private val viewModel by lazy { ViewModelProvider(this)[UserProfileViewModel::class.java] }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        App.instance.appComponent.injectUserProfile(this)
+
 
         val bundle = arguments
         if (bundle != null) {

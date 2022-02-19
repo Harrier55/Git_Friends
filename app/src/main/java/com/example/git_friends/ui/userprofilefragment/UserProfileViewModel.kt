@@ -8,22 +8,29 @@ import androidx.lifecycle.ViewModel
 import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.data.webconnection.RetrofitUserProfile
 import com.example.git_friends.di.Di
+import com.example.git_friends.di.Di.userEntityRepo
 import com.example.git_friends.di.inject
 import com.example.git_friends.domain.UserEntity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import retrofit2.Retrofit
+import javax.inject.Inject
 
 
 private const val BASEURl: String = "https://api.github.com/"
 
-class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
+class UserProfileViewModel() : ViewModel(), ContractViewModelUserProfileFragment {
 
     private val listUserProfileViewModel = MutableLiveData<List<UserReposGitHub>>()
     private val avatar = MutableLiveData<String>()
     private var checkUserInTheList = MutableLiveData<Boolean>()
 
-    private val userEntityRepo: UserEntityRepo = inject()
+//    private val userEntityRepo: UserEntityRepo = inject()
     private val retrofit: Retrofit = inject()
+
+//    @Inject
+//     lateinit var userEntityRepo: UserEntityRepo
+//    @Inject
+//     lateinit var retrofit: Retrofit
 
 
     init {

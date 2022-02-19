@@ -9,19 +9,19 @@ import com.example.git_friends.R
 import com.example.git_friends.data.App
 import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.databinding.ActivityMainBinding
-import com.example.git_friends.di.Di
-import com.example.git_friends.di.inject
-import com.example.git_friends.domain.UserEntity
+
 import com.example.git_friends.ui.listuserfragment.ListUsersFragment
+
 import com.example.git_friends.ui.userprofilefragment.UserProfileFragment
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val listUsersFragment by lazy { ListUsersFragment(manageFragment) }
     private val userProfileFragment by lazy { UserProfileFragment() }
-
-    private val userEntityRepo: UserEntityRepo =  inject()
+    @Inject
+    lateinit var userEntityRepo: UserEntityRepo
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +29,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        App.instance.appComponent.injectMain(this)
+
         userEntityRepo.generateTestListUser() /** тестовый репозиторий*/
 
         initFragmentManager(listUsersFragment)
-
     }
 
      private fun initFragmentManager(fragment: Fragment) {
