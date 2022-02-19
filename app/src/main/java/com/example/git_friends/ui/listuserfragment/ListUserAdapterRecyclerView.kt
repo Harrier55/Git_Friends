@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.git_friends.R
@@ -38,15 +37,19 @@ class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnCl
             .into(holder.avatar)
 
         holder.login.setOnClickListener {
-//            Toast.makeText(holder.itemView.context,listUsers[position].login,Toast.LENGTH_SHORT).show()
+
             onClickItemListUsersFragment.onClickItemUser(listUsers[position])
+        }
+        holder.deleteButton.setOnClickListener {
+            Toast.makeText(holder.itemView.context, listUsers[position].login, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
     class ListUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val login: TextView = itemView.findViewById(R.id.item_list_user_login_text_view)
         val avatar: ImageView = itemView.findViewById(R.id.item_list_user_avatar_image_view)
-
+        val deleteButton: ImageButton = itemView.findViewById(R.id.item_list_user_delete_button)
     }
 
 }
