@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.git_friends.data.App
 import com.example.git_friends.data.userentityrepo.UserEntityRepo
-import com.example.git_friends.di.Di.userEntityRepo
 import javax.inject.Inject
 
 class ListModelFactory: ViewModelProvider.Factory {

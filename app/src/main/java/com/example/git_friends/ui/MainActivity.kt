@@ -29,11 +29,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        App.instance.appComponent.injectMain(this)
-
-        userEntityRepo.generateTestListUser() /** тестовый репозиторий*/
-
+        initDependenciesDagger()
         initFragmentManager(listUsersFragment)
+        userEntityRepo.generateTestListUser() /** тестовый репозиторий*/
+    }
+    private fun initDependenciesDagger(){
+        App.instance.appComponent.injectMain(this)
     }
 
      private fun initFragmentManager(fragment: Fragment) {
