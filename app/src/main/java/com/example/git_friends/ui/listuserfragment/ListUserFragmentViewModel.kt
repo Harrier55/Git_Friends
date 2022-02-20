@@ -13,7 +13,7 @@ class ListUserFragmentViewModel(
     ContractViewModelListUserFragment {
     private var listUser: List<UserEntity> = mutableListOf()
     private val listUserViewModel = MutableLiveData<List<UserEntity>>()
-    private var disposable:Disposable? = null
+    private var disposable: Disposable? = null
 
     init {
         listUser = userEntityRepo.readUsersList()
@@ -21,9 +21,9 @@ class ListUserFragmentViewModel(
 
     override fun loadData() {
         /**  прямой синхронный метод*/
-        //       listUserViewModel.postValue(listUser)
+//        listUserViewModel.postValue(listUser)
 
-        /** асинхронный метод через Rx */
+        /** асинхронный метод получения данныз из Репо через Rx */
          disposable = userEntityRepo.singleListUser
             .doOnSuccess { listUserViewModel.postValue(it) }
             .subscribe()
@@ -31,6 +31,11 @@ class ListUserFragmentViewModel(
 
     override fun getListUsersFromViewModel(): MutableLiveData<List<UserEntity>> {
         return listUserViewModel
+    }
+
+    override fun deleteUserEntity(userEntity: UserEntity) {
+        userEntityRepo.deleteUser(userEntity)
+        loadData()
     }
 
     override fun onCleared() {

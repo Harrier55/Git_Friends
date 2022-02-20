@@ -33,17 +33,17 @@ class ListUserAdapterRecyclerView(private var onClickItemListUsersFragment: OnCl
         holder.login.text = listUsers[position].login
         Glide.with(holder.itemView.context)
             .load(listUsers[position].avatar)
+            .circleCrop()
             .placeholder(R.drawable.ic_baseline_attribution_24)
             .into(holder.avatar)
 
         holder.login.setOnClickListener {
-
             onClickItemListUsersFragment.onClickItemUser(listUsers[position])
         }
-        holder.deleteButton.setOnClickListener {
-            Toast.makeText(holder.itemView.context, listUsers[position].login, Toast.LENGTH_SHORT)
-                .show()
-        }
+       holder.deleteButton.setOnLongClickListener {
+           onClickItemListUsersFragment.onClickDeleteUserButton(listUsers[position])
+           return@setOnLongClickListener true
+       }
     }
 
     class ListUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

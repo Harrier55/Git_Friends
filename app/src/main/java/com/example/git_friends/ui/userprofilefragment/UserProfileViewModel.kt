@@ -20,6 +20,7 @@ class UserProfileViewModel(
     private val listUserProfileViewModel = MutableLiveData<List<UserReposGitHub>>()
     private val avatar = MutableLiveData<String>()
     private var checkUserInTheList = MutableLiveData<Boolean>()
+    private lateinit var avatarUrl:String
 
     init {
         checkUserInTheList.postValue(true)
@@ -35,7 +36,7 @@ class UserProfileViewModel(
     }
 
     override fun addUser(loginUser: String) {
-        userEntityRepo.createUser(UserEntity(login = loginUser))
+        userEntityRepo.createUser(UserEntity(login = loginUser,avatar = avatarUrl))
     }
 
     fun checkUserInTheList(loginUser: String): LiveData<Boolean> {
@@ -62,7 +63,7 @@ class UserProfileViewModel(
                     listUserProfileViewModel.postValue(it)
 
                     try {
-                        val avatarUrl = it[0].owner.avatar_url
+                        avatarUrl = it[0].owner.avatar_url
                         avatar.postValue(avatarUrl)
                     } catch (e: Exception) {
                         // todo что то пошло не так

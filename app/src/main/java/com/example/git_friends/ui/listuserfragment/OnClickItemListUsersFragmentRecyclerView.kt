@@ -4,4 +4,5 @@ import com.example.git_friends.domain.UserEntity
 
 interface OnClickItemListUsersFragmentRecyclerView {
     fun onClickItemUser(userEntity: UserEntity)
+    fun onClickDeleteUserButton(userEntity: UserEntity)
 }

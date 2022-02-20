@@ -62,6 +62,10 @@ class ListUsersFragment(private val manageFragment: ManageFragment) : Fragment()
         override fun onClickItemUser(userEntity: UserEntity) {
             manageFragment.sendUserProfileFragment(userEntity.login)
         }
+
+        override fun onClickDeleteUserButton(userEntity: UserEntity) {
+            viewModel.deleteUserEntity(userEntity)
+        }
     }
 
     override fun onDestroy() {

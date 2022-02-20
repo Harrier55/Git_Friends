@@ -1,6 +1,9 @@
 package com.example.git_friends.data
 
 import android.app.Application
+
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.example.git_friends.di.DaggerAppComponent
 import com.example.git_friends.di.Di
 import com.example.git_friends.di.NetworkModule
@@ -18,6 +21,8 @@ class App : Application() {
         super.onCreate()
         Di.init(this)
         instance = this
+        /**  Переключились на темную тему */
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     companion object {
