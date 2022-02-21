@@ -1,23 +1,28 @@
 package com.example.git_friends.data
 
 import android.app.Application
-import com.example.git_friends.data.userentityrepo.UserEntityRepo
+
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import com.example.git_friends.di.DaggerAppComponent
 import com.example.git_friends.di.Di
-import com.example.git_friends.domain.UserEntity
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.git_friends.di.NetworkModule
+import com.example.git_friends.di.StorageModule
 
 
+class App : Application() {
 
-class App: Application() {
-
-//    val di: Di by lazy { Di() }
+    val appComponent = DaggerAppComponent.builder()
+        .storageModule(StorageModule())
+        .networkModule(NetworkModule())
+        .build()
 
     override fun onCreate() {
         super.onCreate()
         Di.init(this)
         instance = this
+        /**  Переключились на темную тему */
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     companion object {
@@ -48,18 +53,4 @@ class App: Application() {
 //            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 //            .build()
 //    }
-
-
-
-//    fun generateTestListUser(){
-//        userEntityRepo.createUser(UserEntity(1,"kshalnov"))
-//        userEntityRepo.createUser(UserEntity(2,"Harrier55"))
-//        userEntityRepo.createUser(UserEntity(3,"kshalnov"))
-//        userEntityRepo.createUser(UserEntity(4,"Rogoz208"))
-//        userEntityRepo.createUser(UserEntity(5,"niqmarin"))
-//        userEntityRepo.createUser(UserEntity(6,"niqmarin"))
-//        userEntityRepo.createUser(UserEntity(7,"test log 7"))
-//    }
-
-
 }

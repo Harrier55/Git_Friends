@@ -11,7 +11,7 @@ data class Owner (
 	@SerializedName("avatar_url") val avatar_url : String,
 //	@SerializedName("gravatar_id") val gravatar_id : String,
 //	@SerializedName("url") val url : String,
-//	@SerializedName("html_url") val html_url : String,
+	@SerializedName("html_url") val html_url : String,
 
 
 )

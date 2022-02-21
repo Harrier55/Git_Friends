@@ -7,24 +7,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.git_friends.data.userentityrepo.UserEntityRepo
 import com.example.git_friends.data.webconnection.RetrofitUserProfile
-import com.example.git_friends.di.Di
-import com.example.git_friends.di.inject
 import com.example.git_friends.domain.UserEntity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import retrofit2.Retrofit
 
 
-private const val BASEURl: String = "https://api.github.com/"
-
-class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
+class UserProfileViewModel(
+    private val userEntityRepo: UserEntityRepo,
+    private val retrofit: Retrofit
+) : ViewModel(), ContractViewModelUserProfileFragment {
 
     private val listUserProfileViewModel = MutableLiveData<List<UserReposGitHub>>()
     private val avatar = MutableLiveData<String>()
     private var checkUserInTheList = MutableLiveData<Boolean>()
-
-    private val userEntityRepo: UserEntityRepo = inject()
-    private val retrofit: Retrofit = inject()
-
+    private lateinit var avatarUrl:String
 
     init {
         checkUserInTheList.postValue(true)
@@ -40,16 +36,16 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
     }
 
     override fun addUser(loginUser: String) {
-        userEntityRepo.createUser(UserEntity(login = loginUser))
+        userEntityRepo.createUser(UserEntity(login = loginUser,avatar = avatarUrl))
     }
 
-    fun checkUserInTheList(loginUser: String):LiveData<Boolean>{
-       val listUsers =  userEntityRepo.readUsersList()
-        listUsers.forEach { userEntity->
-           if( userEntity.login?.lowercase() == loginUser.lowercase()){
-               checkUserInTheList.postValue(false)  // пользователь есть в списке-кнопка невидима
-               return checkUserInTheList
-           }
+    fun checkUserInTheList(loginUser: String): LiveData<Boolean> {
+        val listUsers = userEntityRepo.readUsersList()
+        listUsers.forEach { userEntity ->
+            if (userEntity.login?.lowercase() == loginUser.lowercase()) {
+                checkUserInTheList.postValue(false)  // пользователь есть в списке-кнопка невидима
+                return checkUserInTheList
+            }
         }
         checkUserInTheList.postValue(true)/// пользователя нет в списке, кнопка видима
         return checkUserInTheList
@@ -67,7 +63,7 @@ class UserProfileViewModel : ViewModel(), ContractViewModelUserProfileFragment {
                     listUserProfileViewModel.postValue(it)
 
                     try {
-                        val avatarUrl = it[0].owner.avatar_url
+                        avatarUrl = it[0].owner.avatar_url
                         avatar.postValue(avatarUrl)
                     } catch (e: Exception) {
                         // todo что то пошло не так

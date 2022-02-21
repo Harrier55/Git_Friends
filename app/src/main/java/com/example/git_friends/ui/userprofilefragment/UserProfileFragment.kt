@@ -15,15 +15,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 
-class UserProfileFragment : Fragment() {
 
-    private val TAG: String = "@@@"
+class UserProfileFragment : Fragment() {
 
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
+
     private lateinit var recieveInfoLoginUser: String
-    private val viewModel by lazy { ViewModelProvider(this)[UserProfileViewModel::class.java] }
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            ProfileViewModelFactory()
+        )[UserProfileViewModel::class.java]
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,17 +76,16 @@ class UserProfileFragment : Fragment() {
                 .into(binding.avatarUserProfileImageView)
         })
         /** если пользователь есть в репозитории, то кнопка ДОБАВИТЬ не будет видна*/
-        viewModel.checkUserInTheList(recieveInfoLoginUser).observe(viewLifecycleOwner, Observer {visiblity->
-            binding.addUserUserProfileButton.isVisible = visiblity
-        })
+        viewModel.checkUserInTheList(recieveInfoLoginUser)
+            .observe(viewLifecycleOwner, Observer { visiblity ->
+                binding.addUserUserProfileButton.isVisible = visiblity
+            })
 
         binding.addUserUserProfileButton.setOnClickListener {
             viewModel.addUser(recieveInfoLoginUser)
             binding.addUserUserProfileButton.isVisible = false
-            Toast.makeText(requireContext(),"Друг добавлен в список",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Друг добавлен в список", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     override fun onDestroy() {
