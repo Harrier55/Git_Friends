@@ -21,3 +21,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+      
+  on-deploy:
+    runs-on: ubuntu-latest  
+    steps:
+    - name: On-Deploy
+      run: echo "On deploy"
