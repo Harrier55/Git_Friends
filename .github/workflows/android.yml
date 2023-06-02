@@ -23,7 +23,8 @@ jobs:
       run: ./gradlew build
       
   on-deploy:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
+    needs: [build]
     steps:
     - name: On-Deploy
       run: echo "On deploy"
