@@ -17,7 +17,7 @@ class App : Application() {
         .networkModule(NetworkModule())
         .build()
 
-    override fun onCreat() {
+    override fun onCreate() {
         super.onCreate()
         Di.init(this)
         instance = this
